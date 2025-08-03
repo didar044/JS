@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM Manipulation</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+</head>
+<body>
+  <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 20px;">
+    <button onclick="add()" class="btn btn-success">Add</button>
+    <button onclick="Delete()" class="btn btn-danger">Delete</button>
+    <button onclick="Update()" class="btn btn-primary">Update</button>
+  </div>
+
+  <div id="container" style="text-align: center; margin-top: 20px;"></div>
+
+  <script>
+    function add() {
+      let newElement = document.createElement('h1');
+      newElement.innerText = "This is Add";
+      document.getElementById('container').appendChild(newElement);
+     // newElement.id="newPara"
+    }
+
+    function Delete() {
+           const newdelete=document.querySelector('h1');
+           if(newdelete){
+           newdelete.remove();
+           }else{
+            alert("NO Document")
+           }
+    }
+    // function Update(){
+          
+    //   let  newPara=document.getElementById('newPara');
+    //    newPara.classList.add('text-success');
+    //     newPara.innerText = "This is Updated";
+
+
+    // }
+
+
+  //  function Update(){
+  //    let newPara=document.querySelector('h1');
+  //       if (newPara) {
+  //       newPara.classList.add('text-success');
+  //       newPara.innerText = "This is Updated";
+  //     } else {
+  //       alert("No element to update");
+  //     }
+
+  //   }
+
+     function Update(){
+     let newPara=document.querySelectorAll('h1');
+      for(i=0; i<newPara.length; i++){
+        if(!newPara[i].classList.contains('text-success')){
+         newPara[i].classList.add('text-success');
+          newPara[i].innerText = "This is Updated";
+        break;
+        }
+      }
+
+    }
+  
+
+  </script>
+</body>
+</html>

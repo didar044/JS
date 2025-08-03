@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        border: 2px solid white;
+    }
+
+    th {
+        border: 2px solid white;
+        background: rgb(8, 99, 68);
+        color: aliceblue;
+        text-align: center;
+        padding: 8px;
+    }
+
+    td {
+        border: 2px solid white;
+        color: rgb(17, 17, 17);
+        background: rgb(172, 215, 231);
+        text-align: center;
+        padding: 8px;
+    }
+</style>
+ 
+
+</head>
+<body>
+    <a href="./dtafrom/form.html"><button  class="btn btn-success m-3 ">Add Data</button></a>
+     <table>
+        <thead>
+            <tr>
+                <th>userId</th>
+                <th>id</th>
+                <th>title</th>
+                <th>body</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody >
+
+        </tbody>
+     </table>
+</body>
+<script>
+      async function countryapi(){
+
+          try {
+                let response=await fetch(`http://didar.intelsofts.com/Laravel_React/B_POS/public/api/customers`,{
+                    method:'get',
+                    headers:{
+                        'Content-Type':'application/json',
+                    }
+                });
+
+                if(response.ok){
+                      let result=await response.json();
+                     // let customer=result.prescriptions;
+                      
+                    result.forEach(e => {
+                      let row=document.createElement('tr');
+                      row.innerHTML=`
+                      <td>${e.Id } </td>
+                      <td>${e.name}</td>
+                      <td>${e.address}</td>
+                      <td>${e.phone}</td>
+                      
+                      <td><button class="btn btn-danger" onClick="countryDelete(${e.id},this)">Delete</button></td>
+                      `;
+                      
+                        document.querySelector('tbody').appendChild(row);
+                       
+                      });
+                }else{
+                    document.querySelector('table').innerText=`Error: ${response.status}`
+                }
+
+            }catch (error) {
+            console.error("Fetch Error:", error);
+            document.querySelector('table').innerText = `Error: ${error.message}`;
+       }
+                
+                
+      }
+    countryapi();
+      async  function countryDelete(id, btn){
+          try{
+           // alert(id);
+
+            let response=await fetch(`http://didar.intelsofts.com/Laravel_React/B_POS/public/api/customers/${id}`,{
+                method:'DELETE',
+                headers:{
+                    'Content-Type':'application/json',
+                    },
+            });
+
+            if(response.ok){                
+            let row=btn.closest('tr')
+            row.remove();
+            } else {
+                    console.error('Delete failed with status:', response.status);
+                    document.querySelector('table').innerText=`Error ${response.status}`;
+            };
+          }catch(error){
+            console.log(error);
+            document.querySelector('table').innerText=`erro:${error.message}`;
+          }
+      }
+</script>
+
+</html>

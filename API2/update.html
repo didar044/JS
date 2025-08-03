@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="padding: 100px;">
+    <a href="./apicall.html"><button>Back To List</button></a>
+
+       <form action="" onsubmit="update(event)" >
+        Name <br /><br />
+        <input type="text" id="name" autocomplete="name" /><br /><br />
+        Photo <br /><br />
+        <input type="file" id="photo" width="50"  /><br /><br />
+        <img src="" id="sphoto" alt="" width="50"><br /><br />
+        phone <br /><br />
+        <input type="number" id="phone" autocomplete="tel" /><br /><br />
+       
+        Email <br /><br />
+        <input type="email" id="email" autocomplete="email" /><br /><br />
+        Address <br /><br />
+        <textarea name="" id="address" autocomplete="address"></textarea
+        ><br /><br />
+        Note <br /><br />
+        <textarea name="" id="notes" autocomplete="notes"></textarea
+        ><br /><br />
+        <button type="submit">Submit</button>
+       </form>
+       <div style="color: red;" id="update">
+
+       </div>
+       <script src="./update.js"></script>
+</body>
+</html>

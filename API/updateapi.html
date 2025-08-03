@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+      <div>
+        <a href="./apicall.html"><button>Back to Data</button></a>
+      </div>
+      <form action="" onSubmit="updateCus(event)">
+        Name <br /><br />
+        <input type="text" id="name" autocomplete="name" /><br /><br />
+        Photo <br /><br />
+        <input type="file" id="photo" width="50"  /><br /><br />
+        <img src="" id="sphoto" alt="">
+        phone <br /><br />
+        <input type="number" id="phone" autocomplete="tel" /><br /><br />
+       
+        Email <br /><br />
+        <input type="email" id="email" autocomplete="email" /><br /><br />
+        Address <br /><br />
+        <textarea name="" id="address" autocomplete="address"></textarea
+        ><br /><br />
+        Note <br /><br />
+        <textarea name="" id="notes" autocomplete="notes"></textarea
+        ><br /><br />
+        <button>Submit</button>
+      </form>
+      <div id="text"></div>
+    </div>
+</body>
+<script>
+    async function show() {
+         const id=new  URLSearchParams(window.location.search).get('id');
+          if (!id) {
+                    document.getElementById('text').innerText = "No ID provided in URL";
+                    return;
+                }
+         try{
+                const response=await fetch(`http://didar.intelsofts.com/Laravel_Vue/B_Backend/public/api/customers/${id}`,{
+                    method:'GET',
+                    headers:{
+                        'Content-Type':'application/json',
+                    },
+                })
+                if(response.ok){
+                        let customer=await response.json();
+                       //// let result=customer.data;
+                       document.getElementById('name').value=customer.name || 'n/a';
+                       document.getElementById('phone').value=customer.phone || 'n/a';
+                       document.getElementById('email').value=customer.email || 'n/a';
+                       document.getElementById('address').value=customer.address || 'n/a';
+                       document.getElementById('notes').value=customer.notes || 'n/a';
+                       if(customer.photo){
+                       document.getElementById('sphoto').src=`http://didar.intelsofts.com/Laravel_Vue/B_Backend/public/${customer.photo}` ;
+                        }else{
+                            'n/a';
+                        }
+                     //  document.getElementById('text').innerText=JSON.stringify(customer,null,2);
+
+                }else{
+                      document.getElementById('text').innerText=`Error:${response.error}`;
+                }
+         }catch(error){
+            document.getElementById('text').innerText=`Error:${error.message}`;
+         }
+    };
+    show();
+    async function updateCus(event){
+        event.preventDefault();
+        const id=new URLSearchParams(window.location.search).get('id');
+          if(!id){
+             document.getElementById('text').innerText=`No ID Found`;
+             return;
+          }
+                 
+
+            const name=document.getElementById('name').value;
+            const address=document.getElementById('address').value;
+            const phone=document.getElementById('phone').value;
+            const photo=document.getElementById('photo').files[0];
+            const email=document.getElementById('email').value;
+            const notes=document.getElementById('notes').value;
+
+             const data=new FormData();
+             data.append('_method', 'PUT');
+             data.append('name',name);
+             data.append('phone',phone);
+             data.append('photo',photo);
+             data.append('email',email);
+             data.append('notes',notes);
+             data.append('address',address);
+
+        try{
+
+              let response=await fetch(`http://didar.intelsofts.com/Laravel_Vue/B_Backend/public/api/customers/${id}`,{
+                    method:'POST',
+                    body:data
+               });
+               if(response.ok){
+                  alert('success');
+                  window.location.href="./apicall.html";
+               }else{
+                 document.getElementById('text').innerText=`Error:${response.status}`;
+               }
+
+        }catch(error){
+            document.getElementById('text').innerText=`Error:${error.message}`;
+        }
+    }
+</script>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    table{
+        border-collapse: collapse;
+    }
+    td,th{
+        border: 2px solid black;
+        text-align: center;
+        padding: 4px;
+    }
+</style>
+<body style="display: flex; align-items: center; justify-content: center;">
+    <div>
+        <div>
+            <a href="./sentdataapi.html"><button>Add Data</button></a>
+        </div>
+         <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Photo</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Note</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+         </table>
+         <div id="text"></div>
+        
+    </div> 
+    <script>
+        try{
+            async function customers(){
+                  let response=await fetch(`http://didar.intelsofts.com/Laravel_Vue/B_Backend/public/api/customers`,{
+                      method:'GET',
+                      headers:{
+                        'Content-Type':'application/json',
+                      },
+                  });
+                  if(response.ok){
+                    let result=await response.json();
+                    let customer=result.data;
+
+                    customer.forEach(e=>{
+                       let row=document.createElement('tr');
+                       row.innerHTML=`
+                       <td>${e.id}</td>
+                       <td>${e.name}</td>
+                       <td><img src="http://didar.intelsofts.com/Laravel_Vue/B_Backend/public/${e.photo}" width="40" alt=""> </td>
+                       <td>${e.phone}</td>
+                       <td>${e.email}</td>
+                       <td>${e.address}</td>
+                       <td>${e.notes}</td>
+                       <td>
+                        <button onClick="cusDelete( ${e.id},this)" >D</button>
+                         <a href="./showapi.html?id=${e.id}"> <button>S</button> </a>
+                         <a href="./updateapi.html?id=${e.id}"><button>U</button></a>
+                       </td>
+                       `;
+                       document.querySelector('tbody').appendChild(row);
+                    });
+
+                  //  document.querySelector('table').innerText=JSON.stringify(customer,null,2);
+                    //console.log(customer);
+                }else{
+                    document.querySelector('div').innerText=`${response.status}`
+                }
+            };
+            customers();
+
+        }catch(error){
+            console.log('Eror',error);
+            document.querySelector('table').innerText=`Error:${error.message}`;
+        }
+    </script>
+    <script>
+             async function cusDelete(id , btn) {
+                  
+
+                  try{
+
+                    const response=await fetch(`http://didar.intelsofts.com/Laravel_Vue/B_Backend/public/api/customers/${id}`,{
+                        method:'DELETE',
+                        headers:{
+                           'Content-Type':'application/json',
+                        },
+                    });
+                     if(response.ok){
+                    //     let result=await response.json();
+                    //     let cus=result.data;
+                    //     console.log(cus);
+                            let row=btn.closest('tr')
+                            row.remove();
+                     
+                     }else{
+                        document.getElementById('text').innerText=`Erroro: ${response.status}`;
+                     }
+
+                  }catch(error){
+                          document.getElementById('text').innerText=`Erroro: ${error.message}`;
+                  }
+             }
+    </script>
+</body>
+</html>

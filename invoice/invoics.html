@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table{
+            border-collapse: collapse;
+        }
+        td,th{
+            border: 2px solid black;
+            padding: 5px;
+            text-align: center;
+            width: 60px;
+        }
+        input{
+            width: 60px;
+        }
+
+        
+    </style>
+</head>
+<body>
+
+    <div>
+         <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>price</th>
+                    <th>unit</th>
+                    <th>Amount</th>
+                    <th>Acction</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+            </tbody>
+         </table>
+         <button onclick="add()">Add</button>
+    </div>
+    <div>
+        Total Amount :<span id="totalamount" ></span> <br>
+        Discount: <input type="number" id="discount" oninput="grandtotal()"> <br>
+        Grand Total: <span id="grand-total"> </span>
+    </div>
+    
+    <script src="./invoice.js">
+
+    </script>
+</body>
+</html>

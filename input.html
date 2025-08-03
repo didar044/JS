@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input oninput="add()" type="number" id="element"> <br><br><br>
+    <input oninput="add()" type="number" id="elemen"> <br><br><br>
+    
+    <input type="text" readonly  id="output" style="width: 50px; height: 25px; border: 3px solid gray; "  >
+    <script>
+         function add(){
+              let  num1=+document.getElementById("element").value;
+              let  num2=+document.getElementById("elemen").value;
+              let  sum=num1-num2;
+              document.getElementById("output").value=sum;
+         }
+    </script>
+</body>
+</html>

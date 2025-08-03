@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  
+  <body style="display: flex; align-items: center; justify-content: center">
+    <div>
+      <div>
+        <a href="./apicall.html"><button>Back to Data</button></a>
+      </div>
+      <form action="" onSubmit="dataSubmit(event)">
+        Name <br /><br />
+        <input type="text" id="name" autocomplete="name" /><br /><br />
+        Photo <br /><br />
+        <input type="file" id="file" /><br /><br />
+        phone <br /><br />
+        <input type="number" id="phone" autocomplete="tel" /><br /><br />
+        Email <br /><br />
+        <input type="email" id="email" autocomplete="email" /><br /><br />
+        Address <br /><br />
+        <textarea name="" id="address" autocomplete="address"></textarea
+        ><br /><br />
+        Note <br /><br />
+        <textarea name="" id="notes" autocomplete="notes"></textarea
+        ><br /><br />
+        <button>Submit</button>
+      </form>
+      <div id="text"></div>
+    </div>
+
+       <script>
+           async function dataSubmit(event){
+            event.preventDefault();
+              const name=document.getElementById('name').value;
+              const photo=document.getElementById('file').files[0];
+              const phone=document.getElementById('phone').value;
+              const email=document.getElementById('email').value;
+              const address=document.getElementById('address').value;
+              const notes=document.getElementById('notes').value;
+
+              try{
+                 
+                const data=new FormData();
+                data.append('name', name);
+                data.append('photo', photo);
+                data.append('phone', phone);
+                data.append('email', email);
+                data.append('address', address);
+                data.append('notes', notes);
+
+                let response= await fetch(`http://didar.intelsofts.com/Laravel_Vue/B_Backend/public/api/customers`,{
+                     method:'POST',
+                     body:data,
+                });
+
+                if(!response.ok){
+                    const err = await response.json();
+                    document.getElementById('text').innerText=`Error ; ${err.message}`;
+                }else{
+                    alert('success')
+                    window.location.href = "./apicall.html"; 
+                }
+
+              }catch(error){
+                console.log(error);
+                document.getElementById('text').innerText=`Fetch failed: ${error.message}`;
+              }
+
+           }
+       </script>
+  </body>
+</html>

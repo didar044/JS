@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="./apicall.html">Back</a>
+<h2>Customer Info</h2>
+<p><strong>Name:</strong> <span id="name"></span></p>
+<p><strong>Phone:</strong> <span id="phone"></span></p>
+<p><strong>Email:</strong> <span id="email"></span></p>
+<p><strong>Address:</strong> <span id="address"></span></p>
+<p><strong>Notes:</strong> <span id="notes"></span></p>
+<p><strong>Photo:</strong> <img  width="50" alt="" id="photo" > </span></p>
+
+<div id="text">
+
+</div>
+    
+</body>
+
+<script>
+   async function showCus(){
+
+    const id = new URLSearchParams(window.location.search).get('id');
+   // let bid=new URLSearchParams(window.location.search).get('id');
+   
+
+       try{
+            const response=await fetch(`http://didar.intelsofts.com/Laravel_Vue/B_Backend/public/api/customers/${id}`,{
+                method:'GET',
+                headers:{
+                    'Content-Type':'application/json',
+                },
+            })
+                 if(response.ok){
+                  
+                       let result=await response.json();
+                        document.getElementById('name').innerText=result.name;
+                        document.getElementById('phone').innerText=result.phone;
+                        document.getElementById('email').innerText=result.email
+                        document.getElementById('address').innerText=result.address
+                        document.getElementById('notes').innerText=result.notes
+                        document.getElementById('photo').src = `http://didar.intelsofts.com/Laravel_Vue/B_Backend/public/${result.photo}`;
+                        document.getElementById('text').innerText=JSON.stringify(result,null,2);
+
+                 }else{
+                     document.getElementById('text').innerText=`Error:${response.status}`;
+                 }
+
+
+
+       }catch(error){
+         document.getElementById('text').innerText=`Error:${error.message}`;
+       }
+       }
+       showCus();
+</script>
+</html>

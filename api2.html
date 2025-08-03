@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+            table{
+        border-collapse: collapse;
+    }
+   th{
+        border: 2px solid rgb(252, 251, 251);
+        background: rgb(8, 99, 68);
+        color: aliceblue;
+        text-align: center;
+        padding: 5px;
+    }
+    td{
+        border: 2px solid white;
+        color: white;
+        background: rgb(108, 109, 109);
+        text-align: center;
+        padding: 5px;
+    }
+    </style>
+</head>
+<body>
+
+    <div>
+        <div id="api">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>NAME</th>
+                        <th>PHOTO</th>
+                        <th>EMAIL</th>
+                        <th>ADDRESS</th>
+                        
+                        <th>NOTES</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+    
+            async function api(){
+  
+                let response=await fetch(`http://dola.intelsofts.com/ecommerce_app/laravel_backend/public/api/countries`,{
+                    method:"GET",
+                    headers:{
+                        "Content-Type":"Application/Json",
+                    },
+                });
+                if(response.ok){
+
+                    let customers=await response.json();
+                   // let resule=await response.json();
+                   // let customers=resule.data
+                   // document.getElementById('api').innerText=JSON.stringify(data,null,2);
+
+
+                  //  let tbody=document.createElement('tbody');
+                    customers.forEach( c=>{
+                        let row=document.createElement('tr');
+                        row.innerHTML=`
+                          <td>${c.id}</td>
+                          <td>${c.name}</td>
+                           
+                          <td>${c.code}</td>
+                          <td>${c.address}</td>
+                          <td>${c.notes}</td>
+                          <td><button onclick="DeleteCustomer(${c.id}, this)">Delete</button></td>
+                          
+                        `;
+                    document.querySelector("tbody").appendChild(row);
+                    });
+                    
+                    
+                }else{
+                    document.querySelector('tbody').innerText=`Fattor Error:${response.status}`;
+                }
+
+            }
+            api();
+            
+    </script>
+    <script>
+       async function DeleteCustomer(id, btn) {
+            const response = await fetch(`http://127.0.0.1:8000//api/customers/${id}`, {
+                method: "DELETE",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                alert('Deleted successfully');
+                btn.closest('tr').remove();
+            } else {
+                alert(`Failed to delete: ${response.status}`);
+            }
+        }
+
+    </script>
+</body>
+</html>

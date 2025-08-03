@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+ <style>
+    table{
+        border-collapse: collapse;
+    }
+   th{
+        border: 2px solid rgb(252, 251, 251);
+        background: rgb(8, 99, 68);
+        color: aliceblue;
+        text-align: center;
+        padding: 5px;
+    }
+    td{
+        border: 2px solid white;
+        color: white;
+        background: rgb(108, 109, 109);
+        text-align: center;
+        padding: 5px;
+    }
+ </style>
+
+<body>
+    <p id="api">
+
+
+    </p>
+
+     <script>
+               async function data(){
+                     let response=await fetch('http://dola.intelsofts.com/ecommerce_app/laravel_backend/public/api/countries',{
+                        method:'GET',
+                        headers:{
+                            'Content-Type':'application/json'
+                        },
+                     });
+                     if(response.ok){
+                        let shifts=await response.json();
+                        // let shifts = result.data;
+
+
+                        let table=document.createElement("table");
+                        let thead=document.createElement("thead");
+                        thead.innerHTML=`<tr>
+                              <th>ID</th>
+                              <th>NAME</th>
+                              <th>PHONE</th>
+                              <th>EMAIL</th>
+                              <th>PHOTO</th>
+                              <th>Action</th>
+                            </tr>`
+                         table.appendChild(thead);
+
+
+
+                         let tbody=document.createElement("tbody");
+                         shifts.forEach(item => {
+                            let row = document.createElement("tr");
+                            row.innerHTML=`
+                             <td>${item.id}</td>
+                             <td>${item.name}</td>
+                             <td>${item.phone}</td>
+                             <td>${item.email}</td>
+                            
+                             <td><button>Delete</button></td>
+                            `
+                             tbody.appendChild(row)
+                         });
+                        
+                         table.appendChild(tbody)
+                         document.getElementById('api').appendChild(table);   
+                
+                        // document.getElementById('api').innerText=JSON.stringify(shifts,null,2);
+                        //   <td><img src="http://127.0.0.1:8000/${item.photo}" alt="Photo" width="80" /></td>
+                     }else{
+                         document.getElementById('api').innerText = `Fetch Error: ${response.status}`;
+                     }
+               }
+               data()
+     </script>
+</body>
+</html>
