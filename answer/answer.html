@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://matcha.mizu.sh/matcha.css">
+</head>
+<body>
+      <h1>Apni Amake Phone Den Keno?</h1>
+
+      Option 1 <button onclick="answer()">Kotha  </button>  <br>
+      Option 2 <button onclick="answerr()">Meja  </button> <br> 
+      Answer <h1> <span id="answerrr"></span></h1>
+</body>
+ <script >
+    
+function answer() {
+  let r1 = document.getElementById('answerrr');
+  r1.innerText = "Apnar ";
+  r1.style.display = 'inline'; 
+  setTimeout(out, 1500);
+}
+
+function answerr() {
+  let r1 = document.getElementById('answerrr');
+  r1.innerText = " Kotha";
+  r1.style.display = 'inline'; 
+  setTimeout(out, 1500);
+}
+
+function out() {
+  let r1 = document.getElementById('answerrr');
+  if (r1) {
+    r1.style.display = 'none'; 
+  }
+}
+ </script>
+</html>
+
